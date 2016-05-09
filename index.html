@@ -1,0 +1,71 @@
+<!doctype html>
+<html>
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="chrome=1">
+    <title>Peaky by PhillipPruett</title>
+
+    <link rel="stylesheet" href="stylesheets/styles.css">
+    <link rel="stylesheet" href="stylesheets/github-light.css">
+    <meta name="viewport" content="width=device-width">
+    <!--[if lt IE 9]>
+    <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class="wrapper">
+      <header>
+        <h1>Peaky</h1>
+        <p>Expose your service&#39;s tests over HTTP!</p>
+
+        <p class="view"><a href="https://github.com/PhillipPruett/Peaky">View the Project on GitHub <small>PhillipPruett/Peaky</small></a></p>
+
+
+        <ul>
+          <li><a href="https://github.com/PhillipPruett/Peaky/zipball/master">Download <strong>ZIP File</strong></a></li>
+          <li><a href="https://github.com/PhillipPruett/Peaky/tarball/master">Download <strong>TAR Ball</strong></a></li>
+          <li><a href="https://github.com/PhillipPruett/Peaky">View On <strong>GitHub</strong></a></li>
+        </ul>
+      </header>
+      <section>
+        <h3>
+<a id="peaky-exposes-tests-as-http-endpoints" class="anchor" href="#peaky-exposes-tests-as-http-endpoints" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Peaky Exposes Tests as HTTP Endpoints</h3>
+
+<p>Peaky discovers tests in an application and maps routes to allow them to be called over HTTP. These tests can live within the application they are testing or stood up as their own service.</p>
+
+<h3>
+<a id="what-does-peaky-provide-me" class="anchor" href="#what-does-peaky-provide-me" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What does Peaky provide me?</h3>
+
+<p>One of the great benefits of Peaky is moving tests away from the antiquated paradigm where tests are ran on local machines to being ran from a sharable and accessible location. This does away with <em>‘works on my machine’</em> test issues and allows you to easily share, discover, and execute tests.</p>
+
+<p>Peaky also provides users with a CDN hosted UI out of the box with hooks to provide your own UI experience if you desire.</p>
+
+<p>Peaky aims to remove the barriers between production and pre-production environment tests. With Peaky you register your target environments and their dependencies and let Peaky inject the correct dependency for each test.  E.g. a tests that verifies a homepages availability needs to only be written once and depending on the request to Peaky, it can be ran against any target. </p>
+
+<h3>
+<a id="what-is-considered-a-peaky-test" class="anchor" href="#what-is-considered-a-peaky-test" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>What is considered a Peaky test?</h3>
+
+<p>Basically any public method on concrete types derived from IPeakyTest. There are a few exceptions to this. Peaky will not expose the following as tests:</p>
+
+<ul>
+<li>Public properties</li>
+<li>Constructors</li>
+<li>Methods with <strong>non-defaulted</strong> parameters</li>
+<li>Methods with a <a href="https://msdn.microsoft.com/en-us/library/system.reflection.methodbase.isspecialname(v=vs.110).aspx">Special Name</a>
+</li>
+</ul>
+
+<h3>
+<a id="sensors" class="anchor" href="#sensors" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Sensors</h3>
+
+<p>Peaky will also discover <a href="https://github.com/jonsequitur/Its.Log">Its.Log Sensors</a> in all loaded assemblies and expose them via HTTP endpoints.</p>
+      </section>
+      <footer>
+        <p>This project is maintained by <a href="https://github.com/PhillipPruett">PhillipPruett</a></p>
+        <p><small>Hosted on GitHub Pages &mdash; Theme by <a href="https://github.com/orderedlist">orderedlist</a></small></p>
+      </footer>
+    </div>
+    <script src="javascripts/scale.fix.js"></script>
+    
+  </body>
+</html>

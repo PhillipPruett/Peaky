@@ -48,6 +48,14 @@ namespace Peaky.Tests
         }
 
         [Test]
+        public void When_the_script_location_for_the_UI_is_malformed_then_MapTestRoutes_throws_argumentException()
+        {
+            Action action = () => RequestTestsHtml("nothing valid");
+
+            action.ShouldThrow<ArgumentException>();
+        }
+
+        [Test]
         public void The_library_script_locations_for_the_UI_can_be_configured()
         {
             var response = RequestTestsHtml(testUiLibraryUrls: new []{ "/jquery.js", "/knockout.js" });

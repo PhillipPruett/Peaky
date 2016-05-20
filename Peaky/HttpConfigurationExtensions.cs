@@ -101,9 +101,12 @@ namespace Peaky
 
             // set up specialized handling on the specified routes
             configuration.Filters.Add(new TestErrorFilter(baseUri));
-            if (!string.IsNullOrEmpty(testUiScriptUrl) &&
-                Uri.IsWellFormedUriString(testUiScriptUrl, UriKind.RelativeOrAbsolute))
+            if (!string.IsNullOrEmpty(testUiScriptUrl))
             {
+                if (!Uri.IsWellFormedUriString(testUiScriptUrl, UriKind.RelativeOrAbsolute))
+                {
+                    throw new ArgumentException("Argument is not a well formatted URI string", nameof(testUiScriptUrl));
+                }
                 configuration.TestUiUriIs(testUiScriptUrl);
             }
             var testUiLibraryUrlsArray = testUiLibraryUrls

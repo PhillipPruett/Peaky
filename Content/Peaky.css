@@ -1,0 +1,118 @@
+﻿body {
+    flex-direction: column;
+    background-color: #EFEFEF;
+    font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+}
+
+.testsAndResults {
+    flex-direction: row;
+    display: flex;
+    flex:1;
+}
+
+.tests {
+    background-color: #EFEFEF;
+    display: flex;
+    padding: 7px;
+    flex-direction: column;
+}
+
+.clickable:hover {
+    color: #ff6a00;
+    cursor: pointer;
+}
+
+.results {
+    background-color: #EFEFEF;
+    display: flex;
+    padding: 7px;
+    width: 100%;
+    overflow: hidden;
+    flex-direction: column-reverse;
+    justify-content: flex-end;
+}
+
+.result {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: thin solid #A9A9A9;
+    margin-bottom: 0.5em;
+    width: 100%;
+    background-color: #e2e2e2;
+}
+
+.passed {
+    color: green;
+    animation: none;
+}
+
+.failed {
+    color:darkred;
+    animation: none;
+}
+
+.testName {
+    display: inline
+}
+
+i{
+    margin-right: 3px;
+    display: inline;
+    color: #ff6a00;
+}
+
+.history {
+    min-height: 22px;
+}
+
+.hljs {
+    overflow-x: hidden;
+}
+
+.results pre {
+    white-space: pre-wrap;
+}
+
+h1 {
+    display: inline;
+    margin-bottom: 0;
+    margin-top: 0;
+    color: #ff6a00;
+    text-shadow: -1px 0 black, 0 1px black, 1px 0 black, 0 -1px black;
+}
+
+h2 {
+    border-bottom: thin solid #A9A9A9;
+}
+
+.header {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: baseline;
+}
+
+.header i {
+    padding-left: 5px
+}
+
+h3 {
+    margin-top: 0;
+    margin-bottom: 0.2em;
+}
+
+.collapsed {
+    display:none;
+}
+
+.uncollapsed {
+    display: inherit;
+}
+
+.highlighted {
+    box-sizing: border-box;
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    border: 3px solid #ff6a00;
+}

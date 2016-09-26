@@ -183,7 +183,6 @@ var AvailableTests = React.createClass({
                                       </div>
                                   })
                       }
-                    <div onClick={currentTests.runAll.bind(currentTests, testGroup)}>Run All</div>
                   </div>
               })
                 }

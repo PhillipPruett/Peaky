@@ -87,7 +87,7 @@
 	            { className: 'Sandwich' },
 	            React.createElement(
 	                'div',
-	                { className: 'header' },
+	                { className: 'pageHeader' },
 	                React.createElement(
 	                    'h1',
 	                    null,
@@ -114,7 +114,7 @@
 	                    this.state.testResults.map(function (testResult, i) {
 	                        return React.createElement(
 	                            'div',
-	                            { key: i, className: testResult.isHighlighted + ' result' },
+	                            { key: i, className: testResult.isHighlighted + ' result ' + testResult.result.toLowerCase() + 'Result' },
 	                            React.createElement(
 	                                'div',
 	                                { className: 'header' },
@@ -341,7 +341,7 @@
 	
 	    var mappedTests = groupedTests.map(function (entry) {
 	        return {
-	            sectionName: (entry.key.Application + ' ' + entry.key.Environment).toUpperCase(),
+	            sectionName: (entry.key.Environment + ' ' + entry.key.Application).toUpperCase(),
 	            key: entry.key,
 	            Tests: entry.vals.map(function (test, i) {
 	                return {

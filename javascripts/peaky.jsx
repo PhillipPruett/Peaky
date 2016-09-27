@@ -29,7 +29,7 @@ var Sandwich = React.createClass({
         var sandwich = this;
         return (
          <div className="Sandwich">
-            <div className="header">
+            <div className="pageHeader">
                 <h1>Peaky!</h1>
                 <div className="controls">
                     <i className="fa fa-filter clickable" aria-hidden="true" title={'feature coming soon! ... ' + JSON.stringify([new Set(flatten(flatten(this.state.data.map((testGroup) => testGroup.Tests)).map((test) => test.Tags)))])}></i>
@@ -41,7 +41,7 @@ var Sandwich = React.createClass({
                 <div className="results">
                     {
                         this.state.testResults.map((testResult, i) =>
-                            <div key={i} className={testResult.isHighlighted + ' result'}>
+                            <div key={i} className={testResult.isHighlighted + ' result ' + testResult.result.toLowerCase()+'Result' }>
                                 <div className="header">
                                     <h3 className={testResult.result.toLowerCase() }>
                                         <i className={getIcon(testResult.result)} aria-hidden="true"></i>
@@ -220,7 +220,7 @@ var groupTests = function (tests) {
     var groupedTests = DataGrouper(tests, ["Environment", "Application"]);
 
     var mappedTests = groupedTests.map(entry => ({
-        sectionName: (entry.key.Application + ' ' + entry.key.Environment).toUpperCase(),
+        sectionName: (entry.key.Environment + ' ' + entry.key.Application).toUpperCase(),
         key: entry.key,
         Tests: entry.vals.map((test, i) => ({
             key: i,

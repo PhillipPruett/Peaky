@@ -238,7 +238,7 @@
 	                });
 	                result.result = 'Passed';
 	                result.collapsedState = 'collapsed';
-	                result.raw = JSON.stringify(data.responseJSON || data.responseText || {}, null, 2).replace(/[\\]+r[\\]+n/g, "\n");
+	                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2).replace(/[\\]+r[\\]+n/g, "\n");
 	                sandwich.setState({ testResults: sandwich.state.testResults });
 	                hljs.highlightBlock($('pre code').last()[0]);
 	            },
@@ -248,7 +248,7 @@
 	                });
 	                result.result = 'Failed';
 	                result.collapsedState = 'uncollapsed';
-	                result.raw = JSON.stringify(data.responseJSON || data.responseText || {}, null, 2).replace(/[\\]+r[\\]+n/g, "\n");
+	                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2).replace(/[\\]+r[\\]+n/g, "\n");
 	                sandwich.setState({ testResults: sandwich.state.testResults });
 	                hljs.highlightBlock($('pre code').last()[0]);
 	            }

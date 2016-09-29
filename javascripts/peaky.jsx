@@ -3,6 +3,8 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var htmlContent = require('../App/peaky.html');
 var update = require('immutability-helper');
+var _ = require('underscore');
+var Highlight = require('react-highlight');
 require("babel-polyfill");
 
 var uniqueIds = 0;
@@ -54,7 +56,7 @@ var Sandwich = React.createClass({
                                     </div>
                                 </div>
                                 <section className={testResult.collapsedState}>
-                                    <pre><code className="json">{testResult.raw}</code></pre>
+                                    <Highlight className='JSON'>{testResult.raw}</Highlight>
                                 </section>
                             </div>
                         )
@@ -136,17 +138,15 @@ var Sandwich = React.createClass({
                 var result = sandwich.state.testResults.find(t => t.key == key);
                 result.result = 'Passed';
                 result.collapsedState = 'collapsed';
-                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2).replace(/[\\]+r[\\]+n/g, "\n");
+                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2);
                 sandwich.setState({ testResults: sandwich.state.testResults });
-                hljs.highlightBlock($('pre code').last()[0]);
             },
             error: function (data) {
                 var result = sandwich.state.testResults.find(t => t.key == key);
                 result.result = 'Failed';
                 result.collapsedState = 'uncollapsed';
-                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2).replace(/[\\]+r[\\]+n/g, "\n");
+                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2);
                 sandwich.setState({ testResults: sandwich.state.testResults });
-                hljs.highlightBlock($('pre code').last()[0]);
             },
         });
     }

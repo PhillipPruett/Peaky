@@ -29,6 +29,10 @@
     cursor: pointer;
 }
 
+.clickable:active {
+    color: orangered;
+}
+
 .results {
     background-color: #EFEFEF;
     display: flex;
@@ -146,4 +150,16 @@ h3 {
     -moz-box-sizing: border-box;
     -webkit-box-sizing: border-box;
     border-left: 5px solid #fc5c3c;
+}
+
+.transition{
+  transition: opacity 0.5s ease-in-out;  
+}
+
+.on {
+  opacity: 1;
+}
+
+.off {
+  opacity: 0.01;
 }

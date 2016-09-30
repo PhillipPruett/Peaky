@@ -6,6 +6,7 @@ var update = require('immutability-helper');
 var _ = require('underscore');
 var Highlight = require('react-highlight');
 require("babel-polyfill");
+var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
 
 var uniqueIds = 0;
 
@@ -43,14 +44,14 @@ var Sandwich = React.createClass({
                 <div className="results">
                     {
                         this.state.testResults.map((testResult, i) =>
-                            <div key={i} className={testResult.isHighlighted + ' result ' + testResult.result.toLowerCase()+'Result' }>
+                            <div key={i} className={testResult.isHighlighted + ' result ' + testResult.result.toLowerCase()+'Result'}>
                                 <div className="header">
                                     <h3 className={testResult.result.toLowerCase() }>
                                         <i className={getIcon(testResult.result)} aria-hidden="true"></i>
                                         {testResult.target} - {testResult.name}
                                     </h3>
                                     <div className="controls">
-                                        <i className="fa fa-files-o clickable" aria-hidden="true" title="Copy test result to clipboard" onClick={this.copyToClipboard.bind(null, testResult.raw)}></i>
+                                        <Hello testResult={testResult.raw}/>
                                         <i className="fa fa-minus-square clickable" aria-hidden="true" onClick={this.collapse.bind(null, testResult)}></i>
                                         <i className="fa fa-plus-square clickable" aria-hidden="true" onClick={this.expand.bind(null, testResult)}></i>
                                     </div>
@@ -77,7 +78,7 @@ var Sandwich = React.createClass({
         };
     },
 
-    copyToClipboard : function(text) {
+    copyToClipboard: function (text) {
         var element = document.createElement('div');
         element.textContent = text;
         document.body.appendChild(element);
@@ -112,7 +113,7 @@ var Sandwich = React.createClass({
     },
 
     scrollTestResultIntoViewIfNeeded: function (testResult) {
-        //this isnt working yet. error says Uncaught Invariant Violation: Element appears to be neither 
+        //this isnt working yet. error says Uncaught Invariant Violation: Element appears to be neither
         //ReactComponent nor DOMNode (keys: result,name,url,target,key,raw,collapsedState,isHighlighted)
         var result = this.state.testResults.find(t => testResult.key == t.key);
         var containerDomNode = ReactDOM.findDOMNode(result);
@@ -197,6 +198,37 @@ var AvailableTests = React.createClass({
               })
                 }
             </div>);
+    },
+});
+
+var Hello = React.createClass({
+    getInitialState: function () {
+        return { on: true };
+    },
+    onClick: function () {
+        this.setState({ on: !this.state.on });
+    },
+    render: function () {
+        var variant;
+        if (this.state.on) {
+            variant = 'transition on';
+        } else {
+            variant = 'transition off';
+        }
+        return <i className={variant + " fa fa-files-o clickable"} aria-hidden="true" title="Copy test result to clipboard" onClick={this.copyToClipboard.bind(null, this.props.testResult)}></i>;
+    },
+    copyToClipboard: function (text) {
+        var element = document.createElement('div');
+        element.textContent = text;
+        document.body.appendChild(element);
+
+        var range = document.createRange();
+        range.selectNode(element);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+
+        document.execCommand('copy');
+        element.remove();
     },
 });
 

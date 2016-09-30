@@ -1,12 +1,22 @@
-﻿body {
+﻿html {
+    overflow: hidden;
+    height: 100%;
+}
+
+body {
     flex-direction: column;
     background-color: #EFEFEF;
     font-family: "Segoe UI", Frutiger, "Frutiger Linotype", "Dejavu Sans", "Helvetica Neue", Arial, sans-serif;
+    height: 100%;
 }
 
 * {
     margin: 0;
     padding: 0;
+}
+
+.sandwich, #container {
+    height: 100%;  
 }
 
 .testsAndResults {
@@ -15,6 +25,33 @@
     flex:1;
     padding: 3px;
     padding-left: 8px;
+    height: 100%;
+}
+
+
+.scroll::-webkit-scrollbar-track
+{
+	background: transparent;
+}
+
+.scroll::-webkit-scrollbar
+{
+	width: 6px;
+	background: transparent;
+}
+
+.scroll::-webkit-scrollbar-thumb
+{
+	border-radius: 10px;
+	-webkit-box-shadow: inset 0 0 6px #322525;
+	background-color: #555;
+}
+
+
+.availableTests {
+    overflow-y: scroll;
+    height: 100%;
+    padding-right: 3px;
 }
 
 .tests {
@@ -30,7 +67,7 @@
 }
 
 .clickable:active {
-    color: orangered;
+    color: #00728c;
 }
 
 .results {
@@ -38,9 +75,10 @@
     display: flex;
     padding: 7px;
     width: 100%;
-    overflow: hidden;
-    flex-direction: column-reverse;
-    justify-content: flex-end;
+    overflow-x: hidden;
+    overflow-y: scroll;
+    flex-direction: column;
+    height: 100%;
 }
 
 .result {
@@ -50,6 +88,7 @@
     margin-bottom: 0.5em;
     width: 100%;
     background-color: #e2e2e2;
+    border: 3px solid #e2e2e2;
 }
 
 i.passed {
@@ -82,6 +121,9 @@ i{
 
 .history {
     min-height: 22px;
+    display: flex;
+    flex-direction: row-reverse;
+    justify-content: flex-end;
 }
 
 .hljs {

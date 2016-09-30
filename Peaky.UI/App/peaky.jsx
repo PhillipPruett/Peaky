@@ -31,7 +31,7 @@ var Sandwich = React.createClass({
     render: function () {
         var sandwich = this;
         return (
-         <div className="Sandwich">
+         <div className="sandwich">
             <div className="pageHeader">
                 <h1>Peaky!</h1>
                 <div className="controls">
@@ -41,7 +41,7 @@ var Sandwich = React.createClass({
             </div>
             <div className="testsAndResults">
                 <AvailableTests runTest={this.runTest} scrollTo={this.scrollTestResultIntoViewIfNeeded} testResults={this.state.testResults} data={this.state.data} gotoTestResult={this.gotoTestResult} />
-                <div className="results">
+                <div className="results scroll">
                     {
                         this.state.testResults.map((testResult, i) =>
                             <div key={i} className={testResult.isHighlighted + ' result ' + testResult.result.toLowerCase()+'Result'}>
@@ -129,7 +129,7 @@ var Sandwich = React.createClass({
         var sandwich = this;
         var key = uniqueIds++;
         var newState = update(sandwich.state.testResults, {
-            $push: [{
+            $unshift: [{
                 result: 'Pending',
                 name: getTestName(test.Url),
                 url: test.Url,
@@ -171,7 +171,7 @@ var AvailableTests = React.createClass({
     render: function () {
         var currentTests = this;
         return (
-            <div className="AvailableTests" key={0}>
+            <div className="availableTests scroll" key={0}>
                 {
               currentTests.props.data.map(function (testGroup, i) {
                   return <div key={i} data={i}>

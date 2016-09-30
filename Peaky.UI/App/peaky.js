@@ -87,7 +87,7 @@
 	        var sandwich = this;
 	        return React.createElement(
 	            'div',
-	            { className: 'Sandwich' },
+	            { className: 'sandwich' },
 	            React.createElement(
 	                'div',
 	                { className: 'pageHeader' },
@@ -113,7 +113,7 @@
 	                React.createElement(AvailableTests, { runTest: this.runTest, scrollTo: this.scrollTestResultIntoViewIfNeeded, testResults: this.state.testResults, data: this.state.data, gotoTestResult: this.gotoTestResult }),
 	                React.createElement(
 	                    'div',
-	                    { className: 'results' },
+	                    { className: 'results scroll' },
 	                    this.state.testResults.map(function (testResult, i) {
 	                        return React.createElement(
 	                            'div',
@@ -225,7 +225,7 @@
 	        var sandwich = this;
 	        var key = uniqueIds++;
 	        var newState = update(sandwich.state.testResults, {
-	            $push: [{
+	            $unshift: [{
 	                result: 'Pending',
 	                name: getTestName(test.Url),
 	                url: test.Url,
@@ -278,7 +278,7 @@
 	        var currentTests = this;
 	        return React.createElement(
 	            'div',
-	            { className: 'AvailableTests', key: 0 },
+	            { className: 'availableTests scroll', key: 0 },
 	            currentTests.props.data.map(function (testGroup, i) {
 	                return React.createElement(
 	                    'div',

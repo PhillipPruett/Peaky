@@ -3,7 +3,10 @@ var React = require('react');
 var ReactDOM = require('react-dom');
 var htmlContent = require('../App/peaky.html');
 var update = require('immutability-helper');
+var _ = require('underscore');
+var Highlight = require('react-highlight');
 require("babel-polyfill");
+var ReactCSSTransitionGroup = require("react-addons-css-transition-group");
 
 var uniqueIds = 0;
 
@@ -28,7 +31,7 @@ var Sandwich = React.createClass({
     render: function () {
         var sandwich = this;
         return (
-         <div className="Sandwich">
+         <div className="sandwich">
             <div className="pageHeader">
                 <h1>Peaky!</h1>
                 <div className="controls">
@@ -38,23 +41,23 @@ var Sandwich = React.createClass({
             </div>
             <div className="testsAndResults">
                 <AvailableTests runTest={this.runTest} scrollTo={this.scrollTestResultIntoViewIfNeeded} testResults={this.state.testResults} data={this.state.data} gotoTestResult={this.gotoTestResult} />
-                <div className="results">
+                <div className="results scroll">
                     {
                         this.state.testResults.map((testResult, i) =>
-                            <div key={i} className={testResult.isHighlighted + ' result ' + testResult.result.toLowerCase()+'Result' }>
+                            <div key={i} className={testResult.isHighlighted + ' result ' + testResult.result.toLowerCase()+'Result'}>
                                 <div className="header">
                                     <h3 className={testResult.result.toLowerCase() }>
                                         <i className={getIcon(testResult.result)} aria-hidden="true"></i>
                                         {testResult.target} - {testResult.name}
                                     </h3>
                                     <div className="controls">
-                                        <i className="fa fa-files-o clickable" aria-hidden="true" title="Copy test result to clipboard" onClick={this.copyToClipboard.bind(null, testResult.raw)}></i>
+                                        <Hello testResult={testResult.raw}/>
                                         <i className="fa fa-minus-square clickable" aria-hidden="true" onClick={this.collapse.bind(null, testResult)}></i>
                                         <i className="fa fa-plus-square clickable" aria-hidden="true" onClick={this.expand.bind(null, testResult)}></i>
                                     </div>
                                 </div>
                                 <section className={testResult.collapsedState}>
-                                    <pre><code className="json">{testResult.raw}</code></pre>
+                                    <Highlight className='JSON'>{testResult.raw}</Highlight>
                                 </section>
                             </div>
                         )
@@ -75,8 +78,18 @@ var Sandwich = React.createClass({
         };
     },
 
-    copyToClipboard : function(text) {
-        window.prompt("Copy to clipboard: Ctrl+C, Enter", text);
+    copyToClipboard: function (text) {
+        var element = document.createElement('div');
+        element.textContent = text;
+        document.body.appendChild(element);
+
+        var range = document.createRange();
+        range.selectNode(element);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+
+        document.execCommand('copy');
+        element.remove();
     },
 
     expand: function (testResult) {
@@ -100,7 +113,7 @@ var Sandwich = React.createClass({
     },
 
     scrollTestResultIntoViewIfNeeded: function (testResult) {
-        //this isnt working yet. error says Uncaught Invariant Violation: Element appears to be neither 
+        //this isnt working yet. error says Uncaught Invariant Violation: Element appears to be neither
         //ReactComponent nor DOMNode (keys: result,name,url,target,key,raw,collapsedState,isHighlighted)
         var result = this.state.testResults.find(t => testResult.key == t.key);
         var containerDomNode = ReactDOM.findDOMNode(result);
@@ -116,7 +129,7 @@ var Sandwich = React.createClass({
         var sandwich = this;
         var key = uniqueIds++;
         var newState = update(sandwich.state.testResults, {
-            $push: [{
+            $unshift: [{
                 result: 'Pending',
                 name: getTestName(test.Url),
                 url: test.Url,
@@ -136,17 +149,15 @@ var Sandwich = React.createClass({
                 var result = sandwich.state.testResults.find(t => t.key == key);
                 result.result = 'Passed';
                 result.collapsedState = 'collapsed';
-                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2).replace(/[\\]+r[\\]+n/g, "\n");
+                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2);
                 sandwich.setState({ testResults: sandwich.state.testResults });
-                hljs.highlightBlock($('pre code').last()[0]);
             },
             error: function (data) {
                 var result = sandwich.state.testResults.find(t => t.key == key);
                 result.result = 'Failed';
                 result.collapsedState = 'uncollapsed';
-                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2).replace(/[\\]+r[\\]+n/g, "\n");
+                result.raw = JSON.stringify(data.responseJSON || data.responseText || data || {}, null, 2);
                 sandwich.setState({ testResults: sandwich.state.testResults });
-                hljs.highlightBlock($('pre code').last()[0]);
             },
         });
     }
@@ -160,7 +171,7 @@ var AvailableTests = React.createClass({
     render: function () {
         var currentTests = this;
         return (
-            <div className="AvailableTests" key={0}>
+            <div className="availableTests scroll" key={0}>
                 {
               currentTests.props.data.map(function (testGroup, i) {
                   return <div key={i} data={i}>
@@ -187,6 +198,37 @@ var AvailableTests = React.createClass({
               })
                 }
             </div>);
+    },
+});
+
+var Hello = React.createClass({
+    getInitialState: function () {
+        return { on: true };
+    },
+    onClick: function () {
+        this.setState({ on: !this.state.on });
+    },
+    render: function () {
+        var variant;
+        if (this.state.on) {
+            variant = 'transition on';
+        } else {
+            variant = 'transition off';
+        }
+        return <i className={variant + " fa fa-files-o clickable"} aria-hidden="true" title="Copy test result to clipboard" onClick={this.copyToClipboard.bind(null, this.props.testResult)}></i>;
+    },
+    copyToClipboard: function (text) {
+        var element = document.createElement('div');
+        element.textContent = text;
+        document.body.appendChild(element);
+
+        var range = document.createRange();
+        range.selectNode(element);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+
+        document.execCommand('copy');
+        element.remove();
     },
 });
 
